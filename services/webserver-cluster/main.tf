@@ -40,7 +40,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "tf-vmss" {
 
   admin_ssh_key {
     username   = "am55"
-    public_key = file("${path.module}/vm.pub")
+    public_key = file("webserver-cluster/vm.pub")
   }
 
   source_image_reference {
