@@ -64,3 +64,11 @@ variable "server_http" {
 
 
 }
+
+variable "custom_tags" {
+  description = "Custom tags for instances in the VMSS"
+  type = map(string)
+  default = {
+    "name" = "value"
+  }   
+}
