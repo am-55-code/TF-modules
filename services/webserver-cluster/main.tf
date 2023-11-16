@@ -35,10 +35,17 @@ resource "azurerm_linux_virtual_machine_scale_set" "tf-vmss" {
   location            = azurerm_resource_group.TerraformRG.location
   sku                 = "${var.cluster_sku}"
   instances           = "${var.instance_count}"
-  tags = "${var.custom_tags}"
+  tags                = "${var.custom_tags}"
   admin_username      = "am55"
   user_data                       = base64encode(templatefile("${path.module}/userdata.tftpl", local.data_inputs))
-
+  dynamic "tag" { 
+    for_each = {
+      for key, value in var.custom_tags:
+      key => upper(value) 
+      if key != "Name"
+    }
+    
+  }
   admin_ssh_key {
     username   = "am55"
     public_key = file("${path.module}/vm.pub")
