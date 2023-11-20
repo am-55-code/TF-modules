@@ -8,54 +8,67 @@ variable "heading" {
 
 variable "region" {
   description = "Region for cluster"
-  type = string
-  default = "East US"
-  
+  type        = string
+  default     = "East US"
+
 }
 
 variable "cluster_name" {
   description = "Name for the cluster"
-  type = string
-  default = "tf-webcluster"
+  type        = string
+  default     = "tf-webcluster"
 
 }
 
+variable "username" {
+  description = "Username for the cluster"
+  type        = string
+  sensitive   = true
+
+}
+
+variable "cluster_password" {
+  description = "Password for the cluster"
+  type        = string
+  sensitive   = true
+
+}
 variable "cluster_sku" {
   description = "SKU Family for the cluster"
-  type = string
-  default = "Standard_B1s"
+  type        = string
+  default     = "Standard_B1s"
 }
 
 variable "instance_count" {
   description = "Number of replicas in the cluster"
-  type = number
-  default = 1
-    
+  type        = number
+  default     = 1
+
 }
 
 variable "os_disk_replication" {
   description = "Replication for the OS disk"
-  type = string
-  default = "Standard_LRS"
+  type        = string
+  default     = "Standard_LRS"
 }
 
 variable "storage_account_name" {
   description = "Name for State file STG"
-  type = string
-  default = "tfstg055654770390"
-  
+  type        = string
+  default     = "tfstg055654770390"
+
 }
 
-variable "storage_container_name" {
-  description = "Container name for the state file"
-  type = string
-  
-}
+//variable "storage_container_name" {
+//  description = "Container name for the state file"
+//  type        = string
 
-variable "state_file_remote_key" {
-  description = "Key Name for the state file"
-  type = string
-}
+//}
+
+//variable "state_file_remote_key" {
+//  description = "Key Name for the state file"
+//  type        = string
+//}
 
 variable "server_http" {
   description = "Port for HTTP to the internet"
@@ -67,8 +80,8 @@ variable "server_http" {
 
 variable "custom_tags" {
   description = "Custom tags for instances in the VMSS"
-  type = map(string)
+  type        = map(string)
   default = {
     "name" = "value"
-  }   
+  }
 }
