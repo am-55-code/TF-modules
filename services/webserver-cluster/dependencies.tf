@@ -5,15 +5,15 @@ locals {
 
 resource "azurerm_public_ip" "lb-pip" {
   name                = "${var.cluster_name}-lb-pip"
-  resource_group_name = azurerm_resource_group.TerraformRG.name
-  location            = azurerm_resource_group.TerraformRG.location
+  resource_group_name = azurerm_resource_group.tf-rg.name
+  location            = azurerm_resource_group.tf-rg.location
   allocation_method   = "Static"
 }
 
 resource "azurerm_lb" "tf-lb" {
   name                = "${var.cluster_name}-LB-01"
-  location            = azurerm_resource_group.TerraformRG.location
-  resource_group_name = azurerm_resource_group.TerraformRG.name
+  location            = azurerm_resource_group.tf-rg.location
+  resource_group_name = azurerm_resource_group.tf-rg.name
 
   frontend_ip_configuration {
     name                 = "${var.cluster_name}-fe-pip"
