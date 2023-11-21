@@ -39,6 +39,7 @@ resource "azurerm_key_vault" "kv" {
   resource_group_name = azurerm_resource_group.rg.name
   sku_name            = "standard"
   tenant_id           = var.tenant
+  soft_delete_retention_days = 7
 
   access_policy {
     tenant_id = var.tenant
