@@ -5,16 +5,20 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 3.80.0"
     }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~> 2.46.0"
+    }
   }
 
-  required_version = ">= 1.1.0"
-}
+    required_version = ">= 1.1.0"
+  }
 
 provider "azurerm" {
   features {
     key_vault {
       purge_soft_delete_on_destroy    = true
-      recover_soft_deleted_key_vaults = false
+      recover_soft_deleted_key_vaults = true
     }
   }
 }
@@ -24,7 +28,8 @@ resource "azurerm_resource_group" "rg" {
   location = var.rg.region
 }
 
-data "azurerm_client_config" "tenant" {
+data "azuread_service_principal" "tf-sp" {
+  display_name = var.service-principal
 
 }
 
@@ -37,21 +42,16 @@ resource "azurerm_key_vault" "kv" {
 
   access_policy {
     tenant_id = var.tenant
-    object_id = var.object
-
+    object_id = data.azuread_service_principal.tf-sp.object_id
 
     secret_permissions = [
-      "Get",
-      "Set",
-      "List"
+      "Get", "Set", "List", "Delete", "Purge", "Recover"
     ]
   }
 }
-
 resource "azurerm_key_vault_secret" "admin-secret" {
   name         = var.secret.name
   value        = var.secret.value
   key_vault_id = azurerm_key_vault.kv.id
-
 }
 
