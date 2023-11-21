@@ -27,12 +27,12 @@ variable "username" {
 
 }
 
-variable "cluster_password" {
-  description = "Password for the cluster"
-  type        = string
-  sensitive   = true
+#variable "cluster_password" {
+#  description = "Password for the cluster"
+#  type        = string
+#  sensitive   = true
 
-}
+#}
 variable "cluster_sku" {
   description = "SKU Family for the cluster"
   type        = string

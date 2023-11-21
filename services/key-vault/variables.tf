@@ -12,7 +12,7 @@ variable "rg" {
 
 }
 
-variable "cluster-name" {
+variable "cluster_name" {
   type    = string
   default = "tf-webcluster"
 }
@@ -30,7 +30,7 @@ variable "object" {
 variable "secret" {
   type = map(any)
   default = {
-    name = "admin-secret"
+    name  = "admin-secret"
     value = "P@ssW0rd!"
   }
 

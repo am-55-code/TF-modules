@@ -20,16 +20,16 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "${var.cluster-name}-rg"
+  name     = "${var.cluster_name}-rg"
   location = var.rg.region
 }
 
 data "azurerm_client_config" "tenant" {
- 
+
 }
 
 resource "azurerm_key_vault" "kv" {
-  name                = "${var.cluster-name}-kv"
+  name                = "${var.cluster_name}-kv"
   location            = var.rg.region
   resource_group_name = azurerm_resource_group.rg.name
   sku_name            = "standard"
@@ -49,9 +49,9 @@ resource "azurerm_key_vault" "kv" {
 }
 
 resource "azurerm_key_vault_secret" "admin-secret" {
-  name = var.secret.name
-  value = var.secret.value
+  name         = var.secret.name
+  value        = var.secret.value
   key_vault_id = azurerm_key_vault.kv.id
-  
+
 }
 

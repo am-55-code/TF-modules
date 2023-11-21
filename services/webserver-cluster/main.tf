@@ -56,7 +56,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "tf-vmss" {
   instances           = var.instance_count
   tags                = var.custom_tags
   admin_username      = var.username
-  admin_password      = var.cluster_password
+  admin_password      = data.azurerm_key_vault_secret.admin-secret.value
   user_data           = base64encode(templatefile("${path.module}/userdata.tftpl", local.data_inputs))
 
   //  admin_ssh_key {
@@ -90,3 +90,11 @@ resource "azurerm_linux_virtual_machine_scale_set" "tf-vmss" {
   }
 }
 
+data "azurerm_key_vault" "kv" {
+  name                = "${var.cluster_name}-kv"
+  resource_group_name = azurerm_resource_group.tf-rg.name
+}
+data "azurerm_key_vault_secret" "admin-secret" {
+  name         = "admin-secret"
+  key_vault_id = azurerm_key_vault.kv.id
+}
