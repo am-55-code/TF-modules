@@ -96,5 +96,5 @@ data "azurerm_key_vault" "kv" {
 }
 data "azurerm_key_vault_secret" "admin-secret" {
   name         = "admin-secret"
-  key_vault_id = data.azurerm_key_vault.kv
+  key_vault_id = data.azurerm_key_vault.kv.id
 }
