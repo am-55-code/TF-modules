@@ -26,7 +26,7 @@ locals {
 
 
 // RG Parameters
-resource "azurerm_resource_group" "tf´rg" {
+resource "azurerm_resource_group" "tf-rg" {
   name     = "${var.cluster_name}-rg"
   location = var.region
 }

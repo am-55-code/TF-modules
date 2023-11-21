@@ -31,16 +31,19 @@ data "azurerm_client_config" "tenant" {
 resource "azurerm_key_vault" "kv" {
   name                = "${var.cluster-name}-kv"
   location            = var.rg.region
-  resource_group_name = var.rg.name
+  resource_group_name = azurerm_resource_group.rg.name
   sku_name            = "standard"
-  tenant_id           = data.azurerm_client_config.tenant
+  tenant_id           = var.tenant
 
   access_policy {
+    tenant_id = var.tenant
     object_id = var.object
+
 
     secret_permissions = [
       "Get",
-      "Create"
+      "Set",
+      "List"
     ]
   }
 }
