@@ -48,3 +48,10 @@ resource "azurerm_key_vault" "kv" {
   }
 }
 
+resource "azurerm_key_vault_secret" "admin-secret" {
+  name = var.secret.name
+  value = var.secret.value
+  key_vault_id = azurerm_key_vault.kv.id
+  
+}
+

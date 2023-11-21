@@ -26,3 +26,12 @@ variable "object" {
   type    = string
   default = "7e16f3d5-6211-40bb-b991-c7ce11ebb9cc"
 }
+
+variable "secret" {
+  type = map(any)
+  default = {
+    name = "admin-secret"
+    value = "P@ssW0rd!"
+  }
+
+}
