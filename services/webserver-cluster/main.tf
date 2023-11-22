@@ -49,15 +49,16 @@ resource "azurerm_subnet" "tf-subnet" {
 
 # VMSS Parameters
 resource "azurerm_linux_virtual_machine_scale_set" "tf-vmss" {
-  name                = "${var.cluster_name}-vmss"
-  resource_group_name = azurerm_resource_group.tf-rg.name
-  location            = azurerm_resource_group.tf-rg.location
-  sku                 = var.cluster_sku
-  instances           = var.instance_count
-  tags                = var.custom_tags
-  admin_username      = var.username
-  admin_password      = data.azurerm_key_vault_secret.admin-secret.value
-  user_data           = base64encode(templatefile("${path.module}/userdata.tftpl", local.data_inputs))
+  name                            = "${var.cluster_name}-vmss"
+  resource_group_name             = azurerm_resource_group.tf-rg.name
+  location                        = azurerm_resource_group.tf-rg.location
+  sku                             = var.cluster_sku
+  instances                       = var.instance_count
+  tags                            = var.custom_tags
+  admin_username                  = var.username
+  disable_password_authentication = false
+  admin_password                  = data.azurerm_key_vault_secret.admin-secret.value
+  user_data                       = base64encode(templatefile("${path.module}/userdata.tftpl", local.data_inputs))
 
   //  admin_ssh_key {
   //    username   = "am55"
