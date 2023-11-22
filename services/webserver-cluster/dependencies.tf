@@ -38,7 +38,7 @@ resource "azurerm_lb_rule" "tf-lb-rules" {
   backend_address_pool_ids       = [azurerm_lb_backend_address_pool.lb-backend.id]
 }
 
-resource "azurerm_lb_rule" "tf-lb-rules" {
+resource "azurerm_lb_rule" "lb-inbound-ssh" {
   loadbalancer_id                = azurerm_lb.tf-lb.id
   name                           = "SSH-Inbound"
   protocol                       = "Tcp"
