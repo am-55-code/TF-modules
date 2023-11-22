@@ -47,6 +47,20 @@ resource "azurerm_subnet" "tf-subnet" {
   address_prefixes     = local.subnet_cidr
 }
 
+// Key-Vault Fetch Info
+data "azurerm_key_vault" "kv" {
+  name                = "${var.cluster_name}-kv"
+  resource_group_name = azurerm_resource_group.tf-rg.name
+}
+data "azurerm_key_vault_secret" "admin-secret" {
+  name         = "admin-secret"
+  key_vault_id = data.azurerm_key_vault.kv.id
+}
+
+output "webserver_address" {
+  value = azurerm_public_ip.lb-pip.ip_address
+}
+
 # VMSS Parameters
 resource "azurerm_linux_virtual_machine_scale_set" "tf-vmss" {
   name                            = "${var.cluster_name}-vmss"
@@ -89,17 +103,4 @@ resource "azurerm_linux_virtual_machine_scale_set" "tf-vmss" {
 
     }
   }
-}
-
-data "azurerm_key_vault" "kv" {
-  name                = "${var.cluster_name}-kv"
-  resource_group_name = azurerm_resource_group.tf-rg.name
-}
-data "azurerm_key_vault_secret" "admin-secret" {
-  name         = "admin-secret"
-  key_vault_id = data.azurerm_key_vault.kv.id
-}
-
-output "webserver_address" {
-  value = azurerm_public_ip.lb-pip.ip_address
 }
