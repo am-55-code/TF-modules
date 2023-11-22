@@ -1,5 +1,6 @@
 locals {
   http_port = 80
+  ssh_port = 22
 }
 
 
@@ -11,7 +12,7 @@ resource "azurerm_public_ip" "lb-pip" {
 }
 
 resource "azurerm_lb" "tf-lb" {
-  name                = "${var.cluster_name}-LB-01"
+  name                = "${var.cluster_name}-lb"
   location            = azurerm_resource_group.tf-rg.location
   resource_group_name = azurerm_resource_group.tf-rg.name
 
@@ -33,6 +34,16 @@ resource "azurerm_lb_rule" "tf-lb-rules" {
   protocol                       = "Tcp"
   frontend_port                  = local.http_port
   backend_port                   = local.http_port
+  frontend_ip_configuration_name = "${var.cluster_name}-fe-pip"
+  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.lb-backend.id]
+}
+
+resource "azurerm_lb_rule" "tf-lb-rules" {
+  loadbalancer_id                = azurerm_lb.tf-lb.id
+  name                           = "SSH-Inbound"
+  protocol                       = "Tcp"
+  frontend_port                  = local.ssh_port
+  backend_port                   = local.ssh_port
   frontend_ip_configuration_name = "${var.cluster_name}-fe-pip"
   backend_address_pool_ids       = [azurerm_lb_backend_address_pool.lb-backend.id]
 }

@@ -99,3 +99,7 @@ data "azurerm_key_vault_secret" "admin-secret" {
   name         = "admin-secret"
   key_vault_id = data.azurerm_key_vault.kv.id
 }
+
+output "webserver_address" {
+  value = azurerm_public_ip.lb-pip.ip_address
+}
