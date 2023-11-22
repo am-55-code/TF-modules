@@ -14,12 +14,7 @@ variable "rg" {
 
 variable "cluster_name" {
   type    = string
-  default = "Vault"
-}
-
-variable "tenant" {
-  type    = string
-  default = "62f91faf-22cf-40e1-aa66-30dbbcba5355"
+  default = "Vault-AM55"
 }
 
 variable "service-principal" {
@@ -27,6 +22,10 @@ variable "service-principal" {
   default = "Terraform-SP-Staging"
 }
 
+variable "ga-object-id" {
+  type    = string
+  default = "c427f6f0-4162-4061-9cb0-b1a4ec82035d"
+}
 variable "secret" {
   type = map(any)
   default = {

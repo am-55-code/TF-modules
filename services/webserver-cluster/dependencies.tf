@@ -1,6 +1,6 @@
 locals {
   http_port = 80
-  ssh_port = 22
+  ssh_port  = 22
 }
 
 
