@@ -10,7 +10,6 @@ terraform {
 locals {
   pod_labels = {
     app = var.name
-    status = kubernetes_service.app.status
   }
 }
 
@@ -71,13 +70,4 @@ resource "kubernetes_service" "app" {
       }
       selector = local.pod_labels
     }  
-}
-
-output "service_endpoint" {
-  value = try(
-    "http://${local.status[0]["load_balancer"][0]["ingress"][0]["hostname"]}",
-
-    "(error parsing hostname from status)"
-  )
-  description = "The K8s Service Endpoint"
 }
