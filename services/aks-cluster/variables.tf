@@ -37,8 +37,9 @@ variable "desired_size" {
   type = number
 }
 
+# Minimum 2vcpus and 4gb ram
 variable "vm_size" {
   description = "Size of instance to run in the node "
   type = list(string)
-  default = [ "Standard_B1ms" ]
+  default = [ "Standard_B2s" ]
 }

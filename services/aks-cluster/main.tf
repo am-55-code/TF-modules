@@ -28,15 +28,16 @@ resource "azurerm_kubernetes_cluster" "aks" {
     location = azurerm_resource_group.aks-rg.location
     resource_group_name = azurerm_resource_group.aks-rg.name
     dns_prefix = "${random_uuid.aks.result}-dns"
-
-    identity {
+    
+        identity {
         type = "SystemAssigned"  
         }
 
     default_node_pool {
         name = "agentpool"
         vm_size = var.vm_size[0]
-        node_count = var.desired_size      
+        node_count = var.desired_size  
+            
     }
     linux_profile {
       admin_username = var.username
