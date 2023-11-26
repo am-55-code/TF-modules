@@ -4,15 +4,14 @@ variable "kv" {
 
 }
 
-variable "rg" {
-  type = map(any)
-  default = {
-    region = "East US"
-  }
+variable "rg_name" {
+  description = "Name for the resource group"
+  default = null
 
 }
 
-variable "cluster_name" {
+
+variable "kv_name" {
   type    = string
   default = "Vault-AM55"
 }

@@ -1,13 +1,13 @@
 variable "cluster_name" {
   description = "Name for the cluster"
   type        = string
-  default     = "tf-webcluster"
+  default     = "Cluster"
 }
 
 variable "rg_name" {
   description = "Name for the resource group"
   type        = string
-  default     = "app-webcluster"
+  default     = null
 }
 
 variable "cluster_sku" {
@@ -37,8 +37,20 @@ variable "username" {
   sensitive   = true
 }
 
+variable "user_data" {
+  description = "Script to be attached to instances"
+  type        = string
+  default = null  
+}
+
 variable "os_disk_replication" {
   description = "Replication for the OS disk"
   type        = string
   default     = "Standard_LRS"
+}
+
+variable "kv_name" {
+  description = "Key Vault Name"
+  type = string
+  default = null
 }

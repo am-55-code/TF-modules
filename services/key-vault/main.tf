@@ -14,9 +14,8 @@ terraform {
 }
 
 // RG for KeyVault
-resource "azurerm_resource_group" "rg" {
-  name     = "${var.cluster_name}-rg"
-  location = var.rg.region
+data "azurerm_resource_group" "tf-rg" {
+  name = "${var.rg_name}-rg"
 }
 
 // Fetch data from the Terraform ServicePrincipal
@@ -29,9 +28,9 @@ data "azurerm_client_config" "current" {
 }
 // Creating a Key Vault
 resource "azurerm_key_vault" "kv" {
-  name                       = "${var.cluster_name}-kv"
+  name                       = "${var.kv_name}-kv"
   location                   = var.rg.region
-  resource_group_name        = azurerm_resource_group.rg.name
+  resource_group_name        = data.azurerm_resource_group.tf-rg
   sku_name                   = "standard"
   tenant_id                  = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days = 7

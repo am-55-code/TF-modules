@@ -11,5 +11,5 @@ sudo systemctl enable apache2
 echo "[INFO] Creating index.html"
 
 cat > /var/www/html/index.html << EOF
-    <h1>${heading_one}</h1>
+    <h1>${server_text}</h1>
 EOF

@@ -16,7 +16,7 @@ data "azurerm_resource_group" "tf-rg" {
 
 // Key-Vault Fetch Info
 data "azurerm_key_vault" "kv" {
-  name                = "${var.cluster_name}-kv"
+  name                = "${var.kv_name}-kv"
   resource_group_name = data.azurerm_resource_group.tf-rg
 }
 data "azurerm_key_vault_secret" "admin-secret" {
@@ -34,7 +34,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "tf-vmss" {
   admin_username                  = var.username
   disable_password_authentication = false
   admin_password                  = data.azurerm_key_vault_secret.admin-secret.value
-  #user_data                       = base64encode(templatefile("${path.module}/userdata.tftpl", local.data_inputs))
+  user_data                       = var.user_data
   source_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
