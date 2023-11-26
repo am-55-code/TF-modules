@@ -1,8 +1,31 @@
 locals {
   http_port = 80
   ssh_port  = 22
+
+     vnet_cidr   = ["10.0.0.0/16"]
+    subnet_cidr = ["10.0.2.0/24"]
 }
 
+// RG Parameters
+resource "azurerm_resource_group" "tf-rg" {
+  name     = "${var.rg_name}-rg"
+  location = var.region
+}
+
+// Vnet Parameters
+resource "azurerm_virtual_network" "tf-vnet" {
+  name                = "${var.cluster_name}-vnet"
+  address_space       = local.vnet_cidr
+  location            = azurerm_resource_group.tf-rg.location
+  resource_group_name = azurerm_resource_group.tf-rg.name
+}
+// Subnet under Vnet Parameters
+resource "azurerm_subnet" "tf-subnet" {
+  name                 = "${var.cluster_name}-subnet"
+  resource_group_name  = azurerm_resource_group.tf-rg.name
+  virtual_network_name = azurerm_virtual_network.tf-vnet.name
+  address_prefixes     = local.subnet_cidr
+}
 
 resource "azurerm_public_ip" "lb-pip" {
   name                = "${var.cluster_name}-lb-pip"
