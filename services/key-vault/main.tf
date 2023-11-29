@@ -29,11 +29,11 @@ data "azurerm_client_config" "current" {
 // Creating a Key Vault
 resource "azurerm_key_vault" "kv" {
   name                       = "${var.kv_name}-kv"
-  location                   = var.rg.region
-  resource_group_name        = data.azurerm_resource_group.tf-rg
+  location                   = data.azurerm_resource_group.tf-rg.location
+  resource_group_name        = data.azurerm_resource_group.tf-rg.name
   sku_name                   = "standard"
   tenant_id                  = data.azurerm_client_config.current.tenant_id
-  soft_delete_retention_days = 7
+  soft_delete_retention_days = var.retention_days
 }
 
 // Creating a KeyVault Access Policy (Terraform SP)

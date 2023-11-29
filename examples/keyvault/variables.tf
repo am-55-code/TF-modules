@@ -10,6 +10,11 @@ variable "rg_name" {
 
 }
 
+variable "region" {
+  description = "Region for the resource group"
+  type = string
+  default = "eastus"
+}
 
 variable "kv_name" {
   type    = string
